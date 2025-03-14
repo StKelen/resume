@@ -5,9 +5,14 @@
   export const play = () => {
     const tl = gsap.timeline();
     tl.to('.authorize-container', { x: 0, duration: 0.4 });
-    tl.to('.fingerprint-base .odd', { strokeDasharray: '50px 50px', duration: 0.6, delay: 0.4 });
-    tl.to('.fingerprint-base .even', { strokeDashoffset: '0px', duration: 0.6 }, '-=0.4');
-    tl.to('.fingerprint-tips', { y: 0, duration: 0.3 });
+    tl.fromTo(
+      '.start-btn',
+      { boxShadow: '0px 0px 0px 0px #292c3320' },
+      { boxShadow: '0px 0px 0px 4px #292c3338', ease: 'sine.out', repeat: -1, duration: 1.5, yoyo: true }
+    );
+    // tl.to('.fingerprint-base .odd', { strokeDasharray: '50px 50px', duration: 0.6, delay: 0.4 });
+    // tl.to('.fingerprint-base .even', { strokeDashoffset: '0px', duration: 0.6 }, '-=0.4');
+    // tl.to('.fingerprint-tips', { y: 0, duration: 0.3 });
     tl.play();
   };
 </script>
@@ -16,13 +21,21 @@
   <div class="authorize-container">
     <span class="title">WELCOME</span>
     <div class="authorize-info">
-      <div class="fingerprint-container">
-        <Fingerprint class="fingerprint fingerprint-base" />
-        <Fingerprint class="fingerprint fingerprint-active" />
-      </div>
-      <div class="fingerprint-tips-container">
-        <span class="fingerprint-tips">TAP TO AUTHORIZE</span>
-      </div>
+      <button class="btn start-btn">
+        <div class="icon-container">
+          <Fingerprint class="fingerprint fingerprint-base" />
+          <Fingerprint class="fingerprint fingerprint-active" />
+        </div>
+        <span class="btn-text">TAP TO UNLOCK</span>
+      </button>
+      <div class="divider-container"><span class="divider-text">OR</span></div>
+      <button class="btn download-btn">
+        <div class="icon-container">
+          <Fingerprint class="fingerprint fingerprint-base" />
+          <Fingerprint class="fingerprint fingerprint-active" />
+        </div>
+        <span class="btn-text">DOWNLOAD RESUME</span>
+      </button>
     </div>
   </div>
 </div>
@@ -39,6 +52,7 @@
     height: 100%;
     min-height: 200px;
     transform: translateX(-100%);
+    padding: 6px;
     .title {
       color: #292c33;
       font-weight: 500;
@@ -49,22 +63,86 @@
     .authorize-info {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: stretch;
       justify-content: flex-end;
     }
-    .fingerprint-container {
+    .btn {
+      width: 15svw;
+      height: 4svw;
+      min-width: 220px;
+      min-height: 48px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      border-style: solid;
+      overflow: hidden;
+      border-radius: 4px;
+      cursor: pointer;
+      .btn-text {
+        font-size: 14px;
+        font-family: 'Ubuntu', sans-serif;
+        flex: auto;
+        text-align: center;
+        padding-left: 3px;
+      }
+      .icon-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: calc(4svw - 3px);
+        height: calc(4svw - 3px);
+        min-height: 42px;
+        min-width: 42px;
+        border-radius: 6px;
+      }
+    }
+    .start-btn {
+      background: #292c33;
+      border-color: #292c33;
+      border-width: 3px;
+      .btn-text {
+        color: #ffffff;
+      }
+      .icon-container {
+        background: #f8f8f8;
+      }
+    }
+    .download-btn {
+      background: transparent;
+      border-color: #292c3340;
+      border-width: 2px;
+      .btn-text {
+        color: #292c3390;
+      }
+    }
+    .divider-container {
+      margin: 16px 0;
       position: relative;
-      width: 8svw;
-      height: 8svw;
-      max-width: 64px;
-      max-height: 64px;
-      margin-bottom: 8px;
+      text-align: center;
+      color: #292c3390;
+      font-size: 12px;
+      font-family: 'Ubuntu', sans-serif;
+      &::before, &::after {
+        content: '';
+        position: absolute;
+        top: 49%;
+        border-top: 1px solid #292c3320;
+        z-index: 0;
+      }
+      &::before {
+        left: 0;
+        right: 60%;
+      }
+      &::after {
+        left: 60%;
+        right: 0;
+      }
     }
     :global(.fingerprint) {
-      width: 8svw;
-      height: 8svw;
-      max-width: 64px;
-      max-height: 64px;
+      width: 88%;
+      height: 88%;
       opacity: 1;
       position: absolute;
       stroke: #bbb;
@@ -82,6 +160,14 @@
       stroke-dashoffset: -41px;
       transition: stroke-dashoffset 1ms;
     }
+    :global(.fingerprint-base .odd) {
+      stroke-dasharray: 50px 50px;
+      transition: stroke-dasharray 2000ms;
+    }
+    :global(.fingerprint-base .even) {
+      stroke-dashoffset: 0px;
+      transition: stroke-dashoffset 2000ms;
+    }
     :global(.active .fingerprint-active .odd) {
       stroke-dasharray: 50px 50px;
       transition: stroke-dasharray 2000ms;
@@ -89,17 +175,6 @@
     :global(.active .fingerprint-active .even) {
       stroke-dashoffset: 0px;
       transition: stroke-dashoffset 2000ms;
-    }
-    .fingerprint-tips {
-      display: block;
-      color: #acafa6;
-      font-size: 0.8rem;
-      transform: translateY(-100%);
-      font-family: 'Ubuntu', sans-serif;
-    }
-    .fingerprint-tips-container {
-      overflow: hidden;
-      height: fit-content;
     }
   }
 </style>

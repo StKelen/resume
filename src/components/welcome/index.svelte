@@ -3,7 +3,7 @@
   import Authorize from './Authorize.svelte';
   const { onInit } = $props();
 
-  let startAuthorizePlay: () => {};
+  let startAuthorizePlay: () => void = $state(() => {});
 
   const onWelcomeFinish = () => {
     startAuthorizePlay?.();
