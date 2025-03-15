@@ -1,12 +1,15 @@
 <script lang="ts">
   import Logo from './Logo.svelte';
+  import PoweredBy from './Info.svelte';
   import Authorize from './Authorize.svelte';
   const { onInit } = $props();
 
   let startAuthorizePlay: () => void = $state(() => {});
+  let startPoweredByPlay: () => void = $state(() => {});
 
   const onWelcomeFinish = () => {
     startAuthorizePlay?.();
+    startPoweredByPlay?.();
     onInit?.();
   };
 </script>
@@ -16,6 +19,7 @@
     <Logo finishCb={onWelcomeFinish} />
     <Authorize bind:play={startAuthorizePlay} />
   </div>
+  <PoweredBy bind:play={startPoweredByPlay} />
 </div>
 
 <style>

@@ -1,50 +1,50 @@
 <script lang="ts">
-  import gsap from 'gsap';
+  import { animate } from 'motion';
+  import AttachFile from '@/assets/attach-file.svelte';
   import Fingerprint from '@/assets/fingerprint.svelte';
 
+  const triggerIconAnim = (e: MouseEvent) => {
+    const targetButton = e.target as HTMLElement;
+    animate(targetButton.querySelectorAll('.line')!, { pathLength: [0, 1] }, { duration: 0.8 });
+  };
+
   export const play = () => {
-    const tl = gsap.timeline();
-    tl.to('.authorize-container', { x: 0, duration: 0.4 });
-    tl.fromTo(
-      '.start-btn',
-      { boxShadow: '0px 0px 0px 0px #292c3320' },
-      { boxShadow: '0px 0px 0px 4px #292c3338', ease: 'sine.out', repeat: -1, duration: 1.5, yoyo: true }
-    );
-    // tl.to('.fingerprint-base .odd', { strokeDasharray: '50px 50px', duration: 0.6, delay: 0.4 });
-    // tl.to('.fingerprint-base .even', { strokeDashoffset: '0px', duration: 0.6 }, '-=0.4');
-    // tl.to('.fingerprint-tips', { y: 0, duration: 0.3 });
-    tl.play();
+    animate('.authorize', { x: 0 }, { duration: 0.4 }).then(() => {
+      animate(
+        '.start-btn',
+        { boxShadow: '0px 0px 0px 4px #292c3338' },
+        { repeat: Infinity, repeatType: 'reverse', ease: 'easeOut', delay: 1, duration: 1 }
+      );
+    });
   };
 </script>
 
-<div class="authorize">
-  <div class="authorize-container">
+<div class="authorize-container">
+  <div class="authorize">
     <span class="title">WELCOME</span>
     <div class="authorize-info">
-      <button class="btn start-btn">
+      <button class="btn start-btn" onmouseenter={triggerIconAnim}>
         <div class="icon-container">
-          <Fingerprint class="fingerprint fingerprint-base" />
-          <Fingerprint class="fingerprint fingerprint-active" />
+          <Fingerprint class="fingerprint btn-icon" />
         </div>
         <span class="btn-text">TAP TO UNLOCK</span>
       </button>
       <div class="divider-container"><span class="divider-text">OR</span></div>
-      <button class="btn download-btn">
+      <a class="btn download-btn" href="/resume.pdf" target="_blank" onmouseenter={triggerIconAnim}>
         <div class="icon-container">
-          <Fingerprint class="fingerprint fingerprint-base" />
-          <Fingerprint class="fingerprint fingerprint-active" />
+          <AttachFile class="btn-icon" />
         </div>
         <span class="btn-text">DOWNLOAD RESUME</span>
-      </button>
+      </a>
     </div>
   </div>
 </div>
 
 <style lang="scss">
-  .authorize {
+  .authorize-container {
     overflow: hidden;
   }
-  .authorize-container {
+  .authorize {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -97,10 +97,18 @@
         min-width: 42px;
         border-radius: 6px;
       }
+      :global(.btn-icon) {
+        width: 66%;
+        height: 66%;
+        :global(.line) {
+          stroke: #bbbbbb;
+        }
+      }
     }
     .start-btn {
       background: #292c33;
       border-color: #292c33;
+      box-shadow: 0px 0px 0px 0px #292c3320;
       border-width: 3px;
       .btn-text {
         color: #ffffff;
@@ -124,7 +132,8 @@
       color: #292c3390;
       font-size: 12px;
       font-family: 'Ubuntu', sans-serif;
-      &::before, &::after {
+      &::before,
+      &::after {
         content: '';
         position: absolute;
         top: 49%;
@@ -139,42 +148,6 @@
         left: 60%;
         right: 0;
       }
-    }
-    :global(.fingerprint) {
-      width: 88%;
-      height: 88%;
-      opacity: 1;
-      position: absolute;
-      stroke: #bbb;
-    }
-    :global(.fingerprint-active) {
-      stroke: #000;
-    }
-    :global(.odd) {
-      stroke-dasharray: 0px 50px;
-      stroke-dashoffset: 1px;
-      transition: stroke-dasharray 1ms;
-    }
-    :global(.even) {
-      stroke-dasharray: 50px 50px;
-      stroke-dashoffset: -41px;
-      transition: stroke-dashoffset 1ms;
-    }
-    :global(.fingerprint-base .odd) {
-      stroke-dasharray: 50px 50px;
-      transition: stroke-dasharray 2000ms;
-    }
-    :global(.fingerprint-base .even) {
-      stroke-dashoffset: 0px;
-      transition: stroke-dashoffset 2000ms;
-    }
-    :global(.active .fingerprint-active .odd) {
-      stroke-dasharray: 50px 50px;
-      transition: stroke-dasharray 2000ms;
-    }
-    :global(.active .fingerprint-active .even) {
-      stroke-dashoffset: 0px;
-      transition: stroke-dashoffset 2000ms;
     }
   }
 </style>
