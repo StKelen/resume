@@ -29,7 +29,6 @@
     "wrangler": "^3.114.1"
   },
   "dependencies": {
-    "gsap": "^3.12.7",
     "motion": "^12.5.0"
   },
   "pnpm": {

@@ -1,8 +1,8 @@
 <script lang="ts">
-  import gsap from 'gsap';
+  import { animate } from 'motion';
 
   export const play = () => {
-    gsap.to('.powered-by', { x: 0, duration: 0.5 });
+    animate('.powered-by', { x: 0 }, { duration: 0.5 });
   };
 </script>
 

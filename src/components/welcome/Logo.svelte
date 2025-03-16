@@ -1,24 +1,22 @@
 <script lang="ts">
-  import gsap from 'gsap';
+  import { animate, steps, type AnimationSequence } from 'motion';
   import { onMount } from 'svelte';
 
   const { finishCb } = $props();
 
+  const sequences: AnimationSequence = [
+    ['.logo-container', { opacity: 1 }, { duration: 0 }],
+    ['#container-triangle', { scale: [0, 1] }, { duration: 0.3 }],
+    ['#outer-triangle', { rotate: [360, 0], scale: [0, 1] }, { duration: 0.5, at: 0.7 }],
+    ['#inner-triangle', { rotate: [360, 0], scale: [0, 1] }, { duration: 0.5, at: 0.9 }],
+    ['.logo-container .title', { width: '100%' }, { duration: 0.6, at: 0.2, ease: steps(12, 'start') }],
+  ];
+
   onMount(() => {
-    const tl = gsap.timeline({
-      onComplete() {
-        finishCb();
-        gsap.to('.logo-container', { x: 0, duration: 0.4 });
-      },
+    animate(sequences).then(() => {
+      finishCb();
+      animate('.logo-container', { x: 0 }, { duration: 0.4 });
     });
-    gsap.set('#container-triangle, #outer-triangle', { transformOrigin: '66% 50%' });
-    gsap.set('#inner-triangle', { transformOrigin: '33% 50%' });
-    tl.to('.logo-container', { opacity: 1, duration: 0 });
-    tl.fromTo('#container-triangle', { scale: 0 }, { scale: 1, duration: 0.3 });
-    tl.fromTo('#outer-triangle', { rotate: 360, scale: 0 }, { rotate: 0, scale: 1, duration: 0.5 }, '-=0.1');
-    tl.fromTo('#inner-triangle', { rotate: 360, scale: 0 }, { rotate: 0, scale: 1, duration: 0.5 }, '-=0.3');
-    tl.to('.logo-container .title', { width: '100%', duration: 0.6, ease: 'steps(12)' }, 0.2);
-    tl.play();
   });
 </script>
 
@@ -44,7 +42,7 @@
 <style lang="scss">
   .logo-container {
     padding-right: 1svw;
-    transform: translateX(5svw);
+    transform: translateX(6svw);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -67,6 +65,12 @@
       font-family: 'Ubuntu', sans-serif;
       white-space: nowrap;
       overflow: hidden;
+    }
+    #container-triangle,
+    #outer-triangle,
+    #inner-triangle {
+      transform: scale(0);
+      transform-origin: 60% 50% !important;
     }
   }
 </style>

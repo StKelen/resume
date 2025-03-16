@@ -1,9 +1,9 @@
 <script lang="ts">
-  import gsap from 'gsap';
+  import { animate } from 'motion';
   const { initd } = $props();
   $effect(() => {
     if (!initd) return;
-    gsap.to('.header', { x: 0, duration: 0.5 });
+    animate('.header', { x: 0 }, { duration: 0.5 });
   });
 </script>
 
