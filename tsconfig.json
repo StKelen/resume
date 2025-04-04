@@ -11,9 +11,6 @@
     "strict": true,
     "module": "preserve",
     "moduleResolution": "bundler",
-    "paths": {
-      "@/*": ["src/*"]
-    },
     "types": ["@cloudflare/workers-types/2023-07-01"]
   }
   // Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias

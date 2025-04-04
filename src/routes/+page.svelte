@@ -1,12 +1,21 @@
 <script lang="ts">
-  import Welcome from '@/components/welcome/index.svelte';
+  import Welcome from '@/components/pages/welcome/index.svelte';
+  import Projects from '@/components/pages/projects/index.svelte';
   import Header from '@/components/common/Header/index.svelte';
 
   let initd = $state(false);
+  let entered = $state(true);
   function onSystemInitd() {
     initd = true;
   }
+  function onSystemEntered() {
+    entered = true;
+  }
 </script>
 
-<Welcome onInit={onSystemInitd} />
-<Header initd={initd} />
+<Header {initd} />
+{#if entered}
+  <Projects />
+{:else}
+  <Welcome onInit={onSystemInitd} onEnter={onSystemEntered} />
+{/if}

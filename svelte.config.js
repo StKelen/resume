@@ -15,6 +15,9 @@ const config = {
     alias: {
       '@/*': 'src/*',
     },
+    output: {
+      bundleStrategy: 'single',
+    },
   },
 };
 

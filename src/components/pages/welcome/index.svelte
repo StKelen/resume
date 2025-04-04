@@ -2,7 +2,7 @@
   import Logo from './Logo.svelte';
   import PoweredBy from './Info.svelte';
   import Authorize from './Authorize.svelte';
-  const { onInit } = $props();
+  const { onInit, onEnter } = $props();
 
   let startAuthorizePlay: () => void = $state(() => {});
   let startPoweredByPlay: () => void = $state(() => {});
@@ -17,7 +17,7 @@
 <div class="cover-container">
   <div class="content">
     <Logo finishCb={onWelcomeFinish} />
-    <Authorize bind:play={startAuthorizePlay} />
+    <Authorize bind:play={startAuthorizePlay} {onEnter} />
   </div>
   <PoweredBy bind:play={startPoweredByPlay} />
 </div>

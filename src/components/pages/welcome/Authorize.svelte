@@ -2,13 +2,14 @@
   import { animate } from 'motion';
   import AttachFile from '@/assets/attach-file.svelte';
   import Fingerprint from '@/assets/fingerprint.svelte';
+  let { onEnter, play = $bindable() } = $props();
 
   const triggerIconAnim = (e: MouseEvent) => {
     const targetButton = e.target as HTMLElement;
     animate(targetButton.querySelectorAll('.line')!, { pathLength: [0, 1] }, { duration: 0.8 });
   };
 
-  export const play = () => {
+  play = () => {
     animate('.authorize', { x: 0 }, { duration: 0.4 }).then(() => {
       animate(
         '.start-btn',
@@ -23,19 +24,19 @@
   <div class="authorize">
     <span class="title">WELCOME</span>
     <div class="authorize-info">
-      <button class="btn start-btn" onmouseenter={triggerIconAnim}>
+      <button class="btn start-btn" onmouseenter={triggerIconAnim} onclick={onEnter}>
         <div class="icon-container">
           <Fingerprint class="fingerprint btn-icon" />
         </div>
         <span class="btn-text">TAP TO UNLOCK</span>
       </button>
       <div class="divider-container"><span class="divider-text">OR</span></div>
-      <a class="btn download-btn" href="/resume.pdf" target="_blank" onmouseenter={triggerIconAnim}>
+      <!-- <a class="btn download-btn" href="/resume.pdf" target="_blank" onmouseenter={triggerIconAnim}>
         <div class="icon-container">
           <AttachFile class="btn-icon" />
         </div>
         <span class="btn-text">DOWNLOAD RESUME</span>
-      </a>
+      </a> -->
     </div>
   </div>
 </div>
@@ -147,6 +148,7 @@
       &::after {
         left: 60%;
         right: 0;
+        color: rgb(249, 234, 210);
       }
     }
   }
