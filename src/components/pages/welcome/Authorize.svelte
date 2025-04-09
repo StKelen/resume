@@ -31,12 +31,12 @@
         <span class="btn-text">TAP TO UNLOCK</span>
       </button>
       <div class="divider-container"><span class="divider-text">OR</span></div>
-      <!-- <a class="btn download-btn" href="/resume.pdf" target="_blank" onmouseenter={triggerIconAnim}>
+      <a class="btn download-btn" href="/resume.pdf" target="_blank" onmouseenter={triggerIconAnim}>
         <div class="icon-container">
           <AttachFile class="btn-icon" />
         </div>
         <span class="btn-text">DOWNLOAD RESUME</span>
-      </a> -->
+      </a>
     </div>
   </div>
 </div>
@@ -148,7 +148,6 @@
       &::after {
         left: 60%;
         right: 0;
-        color: rgb(249, 234, 210);
       }
     }
   }
