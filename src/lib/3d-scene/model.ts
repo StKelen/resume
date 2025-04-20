@@ -5,6 +5,7 @@ import model from '@/assets/glass.glb';
 
 let _group: Three.Group;
 
+// Load models and apply the materials
 export async function initModels() {
   return new Promise<Three.Group>((resolve, reject) => {
     const loader = new GLTFLoader();
@@ -12,9 +13,11 @@ export async function initModels() {
       model,
       (gltf) => {
         const meshes = gltf.scene.children;
+        // find all the mesh
         const bodyOriginMesh = meshes.find((m) => m.name === 'body') as Three.Mesh;
         const cornerOriginMesh = meshes.find((m) => m.name === 'corner') as Three.Mesh;
         const screwOriginMesh = meshes.find((m) => m.name === 'screw') as Three.Mesh;
+        // apply new material
         const body = new Three.Mesh(
           bodyOriginMesh.geometry,
           new Three.MeshLambertMaterial({
@@ -62,6 +65,7 @@ export async function initModels() {
   });
 }
 
+// Copy the original model and return it. The new model will add to the scene
 export function getModel() {
   const newMeshes = _group.children.map((m) => {
     const newMesh = m.clone() as Three.Mesh<Three.BufferGeometry, Three.MeshLambertMaterial>;
@@ -73,7 +77,9 @@ export function getModel() {
   return model;
 }
 
+// Imply of making a tag on the model
 export function createTag(id: string) {
+  // create a canvas and and some texts
   const canvas = document.createElement('canvas');
   canvas.width = 150;
   canvas.height = 60;
@@ -89,6 +95,7 @@ export function createTag(id: string) {
     ctx.fillText(`NO. ${id}`, 4, 48);
   }
 
+  // create the tag mesh, implying the material using canvas texture.
   const mesh = new Three.Mesh(
     new Three.PlaneGeometry(0.75, 0.3),
     new Three.MeshBasicMaterial({ map: new Three.CanvasTexture(canvas) })

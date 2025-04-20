@@ -10,6 +10,7 @@ let _camera: Three.Camera;
 let _highlightIndex: number | undefined;
 const _interactGroups: Three.Group[][] = [];
 
+//  create the 3D Scene
 export async function initScene(width: number, height: number) {
   await initModels();
 
@@ -55,6 +56,7 @@ export async function initScene(width: number, height: number) {
   return _renderer.domElement;
 }
 
+// Create the grid of models by given tags
 export function renderModels(tagsInfo: { id: string }[]) {
   const tagStartIndex = Math.ceil((27 - tagsInfo.length) / 2) + DISPLAY_OFFSET;
   for (let row = 0; row <= 2; row++) {
@@ -67,6 +69,7 @@ export function renderModels(tagsInfo: { id: string }[]) {
       model.position.z = -0.15 * z;
       if (row === 1 && column < tagStartIndex + tagsInfo.length && column >= tagStartIndex) {
         model.name = tagsInfo[column - tagStartIndex].id;
+        // for the middle models, create tag
         const tag = createTag(model.name);
         model.add(tag);
       }
@@ -77,10 +80,12 @@ export function renderModels(tagsInfo: { id: string }[]) {
   _renderer.render(_scene, _camera);
 }
 
+// highlight specific model
 export function highlightModel(key: string) {
   _highlightIndex = _interactGroups[1].findIndex((g) => g.name === key);
 }
 
+// when _highlightIndex is given, makes the specific model highlight and change corresponding position Y.
 function animate() {
   if (!_highlightIndex) return;
   for (let i = 0; i < _interactGroups.length; i++) {
@@ -94,6 +99,7 @@ function animate() {
       group.position.y = (targetY - group.position.y) / 12 + group.position.y;
       if (Math.abs(group.position.y - targetY) <= 0.001) group.position.y = targetY;
       group.position.y = Math.max(group.position.y, 0);
+      // use emissive field to make model lighter.
       const body = group.children.find((c) => c.name === 'body')! as Three.Mesh<
         Three.BufferGeometry,
         Three.MeshLambertMaterial

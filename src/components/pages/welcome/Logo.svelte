@@ -4,6 +4,7 @@
 
   const { finishCb } = $props();
 
+  //  Just some animations
   const sequences: AnimationSequence = [
     ['.logo-container', { opacity: 1 }, { duration: 0 }],
     ['#container-triangle', { scale: [0, 1] }, { duration: 0.3 }],
@@ -15,6 +16,7 @@
   onMount(() => {
     animate(sequences).then(() => {
       finishCb();
+      // make the logo translate to left
       animate('.logo-container', { x: 0 }, { duration: 0.4 });
     });
   });

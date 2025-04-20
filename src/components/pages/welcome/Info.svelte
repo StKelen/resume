@@ -8,6 +8,7 @@
 
 <div class="powered-by-container">
   <div class="powered-by">
+    <!-- Parallelograms is just rectangles. I just use CSS transform: skew to make them like parallelograms. -->
     <div class="parallelogram"></div>
     <div class="parallelogram"></div>
     <div class="parallelogram"></div>

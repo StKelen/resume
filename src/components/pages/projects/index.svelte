@@ -9,21 +9,25 @@
   };
   marked.use({ renderer: mdRenderer });
 
+  // Observer the scroll status, to notify which model need to highlight
   const ioCallback: IntersectionObserverCallback = (entries) => {
     for (const entry of entries) {
       if (!entry.isIntersecting) continue;
       const el = entry.target as HTMLDivElement;
+      // find currently showed project, to highlight the model.
       const { key } = el.dataset;
       if (key) highlightModel(key);
     }
   };
 
   onMount(async () => {
+    // create the 3D model Scene
     const el = document.querySelector('#projects-canvas')!;
     const canvas = await initScene(el.clientWidth, el.clientHeight);
     renderModels(projectsExperienceData);
     el.appendChild(canvas);
 
+    // create IO and observe all projects
     const observer = new IntersectionObserver(ioCallback, {
       threshold: [0.25, 0.5, 0.75, 1.0],
       root: document.querySelector('.projects-list-container'),

@@ -4,12 +4,15 @@
   import Fingerprint from '@/assets/fingerprint.svelte';
   let { onEnter, play = $bindable() } = $props();
 
+  // When mouse hover the button, play the icon animation
   const triggerIconAnim = (e: MouseEvent) => {
     const targetButton = e.target as HTMLElement;
     animate(targetButton.querySelectorAll('.line')!, { pathLength: [0, 1] }, { duration: 0.8 });
   };
 
   play = () => {
+    // Since the animation of the shadow of the button is Infinity, it's impossible to use timeline.
+    // So firstly the area of buttons appears, then secondly the shadow blinks.
     animate('.authorize', { x: 0 }, { duration: 0.4 }).then(() => {
       animate(
         '.start-btn',

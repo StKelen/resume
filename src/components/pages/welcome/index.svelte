@@ -7,6 +7,11 @@
   let startAuthorizePlay: () => void = $state(() => {});
   let startPoweredByPlay: () => void = $state(() => {});
 
+  // The play sequence of animation is here:
+  // 1. The main logo rotated.
+  // 2. shows button area.
+  // 3. Meanwhile, The right bottom corner area is also showed.
+  // 3. Besides, notify the page initd, the header can display.
   const onWelcomeFinish = () => {
     startAuthorizePlay?.();
     startPoweredByPlay?.();
