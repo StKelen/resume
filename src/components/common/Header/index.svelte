@@ -31,7 +31,6 @@
   .title,
   .subtitle {
     color: #292c33;
-    font-family: 'Ubuntu', sans-serif;
   }
   .title {
     font-size: 24px;

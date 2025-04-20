@@ -58,7 +58,6 @@
       color: #292c33;
       font-weight: 500;
       font-size: 1.5rem;
-      font-family: 'Ubuntu', sans-serif;
       margin-bottom: 54px;
     }
     .authorize-info {
@@ -82,7 +81,6 @@
       cursor: pointer;
       .btn-text {
         font-size: 14px;
-        font-family: 'Ubuntu', sans-serif;
         flex: auto;
         text-align: center;
         padding-left: 3px;
@@ -132,7 +130,6 @@
       text-align: center;
       color: #292c3390;
       font-size: 12px;
-      font-family: 'Ubuntu', sans-serif;
       &::before,
       &::after {
         content: '';

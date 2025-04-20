@@ -2,7 +2,12 @@
   import { onMount } from 'svelte';
   import { marked } from 'marked';
   import { initScene, renderModels, highlightModel, projectsExperienceData } from '@/lib';
-  import type { FocusEventHandler } from 'svelte/elements';
+
+  const mdRenderer = new marked.Renderer();
+  mdRenderer.link = ({ href, tokens }) => {
+    return `<a target="_blank" href="${href}">${tokens?.[0]?.raw}</a>`;
+  };
+  marked.use({ renderer: mdRenderer });
 
   const ioCallback: IntersectionObserverCallback = (entries) => {
     for (const entry of entries) {
@@ -11,10 +16,6 @@
       const { key } = el.dataset;
       if (key) highlightModel(key);
     }
-  };
-
-  const onMouseOverClip = (e: FocusEvent | MouseEvent) => {
-    console.log(11945, e);
   };
 
   onMount(async () => {
@@ -45,7 +46,7 @@
         </div>
         <div class="flip-container">
           <div class="project-cover">
-            <img src={project.display_img} alt="project display" />
+            <img src={project.display_img} class="project-cover-img" alt="project display" />
           </div>
           <div class="project-desc">
             {#each project.desc as desc}
@@ -167,9 +168,12 @@
     left: 0;
     bottom: 0;
     right: 0;
-    display: flex;
-    align-items: center;
-    justify-self: center;
+    &-img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
   }
 
   .project-desc {
@@ -192,8 +196,13 @@
       text-align: justify;
       line-height: 1.4rem;
     }
-    :global(ol) {
-      padding-inline-start: 1.3rem;
+    :global {
+      ol {
+        padding-inline-start: 1.3rem;
+      }
+      a {
+        text-decoration: underline;
+      }
     }
   }
 </style>

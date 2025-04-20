@@ -4,7 +4,7 @@
   import Header from '@/components/common/Header/index.svelte';
 
   let initd = $state(false);
-  let entered = $state(true);
+  let entered = $state(false);
   function onSystemInitd() {
     initd = true;
   }

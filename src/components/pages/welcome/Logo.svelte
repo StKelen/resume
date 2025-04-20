@@ -62,7 +62,6 @@
       color: #292c33;
       font-size: 1.4em;
       font-weight: 600;
-      font-family: 'Ubuntu', sans-serif;
       white-space: nowrap;
       overflow: hidden;
     }
